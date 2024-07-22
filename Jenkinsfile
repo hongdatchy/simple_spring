@@ -22,7 +22,7 @@ pipeline {
                         // Dừng tiến trình Spring Boot cũ nếu có
                         sh '''
                             # Tìm PID của tiến trình sử dụng cổng 8082 (hoặc cổng khác nếu bạn đã thay đổi)
-                            PID=$(lsof -ti:8082)
+                            PID=$(lsof -ti:8082 || true)
 
                             # Nếu PID tồn tại, dừng tiến trình
                             if [ ! -z "$PID" ]; then
