@@ -15,17 +15,26 @@ pipeline {
             }
         }
         stage('Run') {
-            steps {
-                script {
-                    // Dừng tiến trình Spring Boot cũ nếu có
-
-                    // Di chuyển đến thư mục dự án
-                    dir('/home/hongdatchy/simple_spring') {
-                        kill -9 $(lsof -t -i:8081) || echo "Process was not running."
-                        echo "mvn spring-boot:run" | at now + 1 minutes
+                    steps {
+                        script {
+                            dir('/home/hongdatchy/simple_spring') {
+                                // Dừng tiến trình Spring Boot cũ nếu có
+                                sh '''
+                                PID=$(lsof -t -i:8081)
+                                if [ -n "$PID" ]; then
+                                    echo "Stopping process with PID: $PID"
+                                    kill -9 $PID || echo "Failed to stop process with PID: $PID"
+                                else
+                                    echo "No process is running on port 8081"
+                                fi
+                                '''
+                                // Chạy ứng dụng Spring Boot trong nền và ghi log vào file
+                                sh '''
+                                echo "mvn spring-boot:run" | at now + 1 minutes
+                                '''
+                            }
+                        }
                     }
                 }
-            }
-        }
     }
 }
