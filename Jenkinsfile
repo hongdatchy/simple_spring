@@ -6,8 +6,9 @@ pipeline {
                 script {
                     // Di chuyển đến thư mục dự án
                     dir('/home/hongdatchy/simple_spring') {
-                        // Build project bằng Maven
+                        // Pull latest code from git
                         sh 'git pull origin master'
+                        // Build project using Maven
                         sh 'mvn clean install'
                     }
                 }
@@ -18,16 +19,21 @@ pipeline {
                 script {
                     // Di chuyển đến thư mục dự án
                     dir('/home/hongdatchy/simple_spring') {
-                        // Chạy ứng dụng Spring Boot
-                        sh "pid=\$(lsof -i:8081 -t); kill -TERM \$pid "
-                                          + "|| kill -KILL \$pid"
-                        withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
-                            sh 'nohup ./mvnw spring-boot:run -Dserver.port=8081 &'
-                        }
+                        // Chạy ứng dụng Spring Boot trong nền
+                        sh 'mvn spring-boot:start'
                     }
                 }
             }
         }
-
+    }
+    post {
+        always {
+            script {
+                // Dừng ứng dụng Spring Boot
+                dir('/home/hongdatchy/simple_spring') {
+                    sh 'mvn spring-boot:stop'
+                }
+            }
+        }
     }
 }
