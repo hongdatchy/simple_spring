@@ -21,8 +21,8 @@ pipeline {
                     dir('/home/hongdatchy/simple_spring') {
                         // Dừng tiến trình Spring Boot cũ nếu có
                         sh '''
-                            # Tìm PID của tiến trình sử dụng cổng 8082 (hoặc cổng khác nếu bạn đã thay đổi)
-                            PID=$(lsof -ti:8082 || true)
+                            # Tìm PID của tiến trình sử dụng cổng 8083 (hoặc cổng khác nếu bạn đã thay đổi)
+                            PID=$(lsof -ti:8083 || true)
 
                             # Nếu PID tồn tại, dừng tiến trình
                             if [ ! -z "$PID" ]; then
