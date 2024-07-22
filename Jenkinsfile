@@ -17,10 +17,21 @@ pipeline {
         stage('Run') {
             steps {
                 script {
-                    // Dừng tiến trình Spring Boot cũ nếu có
-
                     // Di chuyển đến thư mục dự án
                     dir('/home/hongdatchy/simple_spring') {
+                        // Dừng tiến trình Spring Boot cũ nếu có
+                        sh '''
+                            # Tìm PID của tiến trình sử dụng cổng 8081 (hoặc cổng khác nếu bạn đã thay đổi)
+                            PID=$(lsof -ti:8081)
+
+                            # Nếu PID tồn tại, dừng tiến trình
+                            if [ ! -z "$PID" ]; then
+                                echo "Dừng tiến trình cũ với PID $PID"
+                                kill -9 $PID
+                            fi
+                        '''
+
+                        // Khởi động ứng dụng mới
                         sh "JENKINS_NODE_COOKIE=dontKillMe nohup java -jar target/SimpleSpring-0.0.1-SNAPSHOT.jar > app.log 2>&1 &"
                     }
                 }
