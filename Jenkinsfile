@@ -21,7 +21,7 @@ pipeline {
 
                     // Di chuyển đến thư mục dự án
                     dir('/home/hongdatchy/simple_spring') {
-                        sh "java -jar target/SimpleSpring-0.0.1-SNAPSHOT.jar"
+                        sh "nohup java -jar target/SimpleSpring-0.0.1-SNAPSHOT.jar > app.log 2>&1 &"
                     }
                 }
             }
