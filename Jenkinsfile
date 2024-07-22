@@ -22,7 +22,7 @@ pipeline {
                     // Di chuyển đến thư mục dự án
                     dir('/home/hongdatchy/simple_spring') {
                         // Chạy ứng dụng Spring Boot trong nền
-                        sh 'mvn spring-boot:run'
+                        sh 'mvn spring-boot:run &'
                     }
                 }
             }
