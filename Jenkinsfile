@@ -18,12 +18,7 @@ pipeline {
             steps {
                 script {
                     // Dừng tiến trình Spring Boot cũ nếu có
-                    sh '''
-                    PID=$(lsof -t -i:8081)
-                    if [ -n "$PID" ]; then
-                      kill -9 $PID
-                    fi
-                    '''
+
                     // Di chuyển đến thư mục dự án
                     dir('/home/hongdatchy/simple_spring') {
                         // Chạy ứng dụng Spring Boot trong nền
