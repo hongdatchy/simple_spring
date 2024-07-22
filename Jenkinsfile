@@ -21,8 +21,8 @@ pipeline {
 
                     // Di chuyển đến thư mục dự án
                     dir('/home/hongdatchy/simple_spring') {
-                        // Chạy ứng dụng Spring Boot trong nền
-                        sh 'mvn spring-boot:run &'
+                        kill -9 $(lsof -t -i:8081) || echo "Process was not running."
+                        echo "mvn spring-boot:run" | at now + 1 minutes
                     }
                 }
             }
