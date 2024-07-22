@@ -19,7 +19,7 @@ pipeline {
                 script {
                     // Dừng tiến trình Spring Boot cũ nếu có
                     sh '''
-                    PID=$(lsof -t -i:8080)
+                    PID=$(lsof -t -i:8081)
                     if [ -n "$PID" ]; then
                       kill -9 $PID
                     fi
