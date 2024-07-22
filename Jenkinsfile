@@ -17,21 +17,18 @@ pipeline {
         stage('Run') {
             steps {
                 script {
+                    // Dừng tiến trình Spring Boot cũ nếu có
+                    sh '''
+                    PID=$(lsof -t -i:8080)
+                    if [ -n "$PID" ]; then
+                      kill -9 $PID
+                    fi
+                    '''
                     // Di chuyển đến thư mục dự án
                     dir('/home/hongdatchy/simple_spring') {
                         // Chạy ứng dụng Spring Boot trong nền
-                        sh 'mvn spring-boot:start'
+                        sh 'nohup mvn spring-boot:run &'
                     }
-                }
-            }
-        }
-    }
-    post {
-        always {
-            script {
-                // Dừng ứng dụng Spring Boot
-                dir('/home/hongdatchy/simple_spring') {
-                    sh 'mvn spring-boot:stop'
                 }
             }
         }
