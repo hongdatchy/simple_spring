@@ -7,6 +7,7 @@ pipeline {
                     // Di chuyển đến thư mục dự án
                     dir('/home/hongdatchy/simple_spring') {
                         // Build project bằng Maven
+                        sh "chmod +x -R ${env.WORKSPACE}"
                         sh 'mvn clean install'
                     }
                 }
