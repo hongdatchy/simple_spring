@@ -21,7 +21,10 @@ pipeline {
                     sh '''
                     PID=$(lsof -t -i:8081)
                     if [ -n "$PID" ]; then
+                      echo "Stopping process with PID: $PID"
                       kill -9 $PID
+                    else
+                      echo "No process is running on port 8081"
                     fi
                     '''
                     // Di chuyển đến thư mục dự án
