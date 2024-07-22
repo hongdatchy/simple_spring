@@ -7,6 +7,7 @@ pipeline {
                     // Di chuyển đến thư mục dự án
                     dir('/home/hongdatchy/simple_spring') {
                         // Build project bằng Maven
+                        sh 'git pull origin master'
                         sh 'mvn clean install'
                     }
                 }
