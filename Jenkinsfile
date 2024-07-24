@@ -1,13 +1,24 @@
 pipeline {
     agent any
     stages {
+    stage('Clone') {
+                steps {
+                    script {
+                        // Di chuyển đến thư mục dự án
+                        dir('/home/hongdatchy') {
+                            // Pull latest code from git
+                            sh 'sudo rm -r -f /home/hongdatchy/simple_spring'
+                            sh 'git clone https://github.com/hongdatchy/simple_spring'
+
+                        }
+                    }
+                }
+            }
         stage('Build') {
             steps {
                 script {
                     // Di chuyển đến thư mục dự án
                     dir('/home/hongdatchy/simple_spring') {
-                        // Pull latest code from git
-                        sh 'git pull origin master'
                         // Build project using Maven
                         sh 'mvn clean install'
                     }
