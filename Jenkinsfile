@@ -7,7 +7,7 @@ pipeline {
                         // Di chuyển đến thư mục dự án
                         dir('/home/hongdatchy') {
                             // Pull latest code from git
-                            sh 'echo "hongdat10" | sudo -S rm -r -f /home/hongdatchy/simple_spring'
+                            sh 'rm -r -f /home/hongdatchy/simple_spring'
                             sh 'git clone https://github.com/hongdatchy/simple_spring'
 
                         }
